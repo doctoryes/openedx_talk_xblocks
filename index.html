@@ -1,0 +1,442 @@
+<html>
+  <head>
+    <title>OpenEdx XBlocks</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href='https://doctoryes.github.io/remark-talks/assets/style.css' rel='stylesheet' type='text/css'>
+    <link href='https://doctoryes.github.io/remark-edx/assets/style-edx.css' rel='stylesheet' type='text/css'>
+  </head>
+  <style>
+    .scale30 {
+      width: 30%;
+    }
+    .scale75 {
+      width: 75%;
+    }
+    .scale80 {
+      width: 80%;
+    }
+    .scale200 {
+      width: 200%;
+    }
+    .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; font-size: 1em; padding: 0.0em;}
+    .remark-code-line-highlighted     { background-color: #373832; }
+    th {
+        text-align: left;
+    }
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 30px;
+    }
+  </style>
+  <body>
+<label for="source" class="sr">Slide Deck</label>
+<textarea id="source" aria-label="Enter your slide deck here in markdown format">
+
+class: title middle left
+
+# Open edX XBlocks
+
+.subtitle[How They Work]
+
+.thirdtitle[Open edX Boston Meetup: March 28th, 2016]
+
+---
+
+# Who am I?
+
+
+**John Eskew**
+
+Principal Software Engineer - edX
+
+Core Platform Team
+
+<https://github.com/doctoryes>
+
+---
+
+# Talk Summary
+
+* Origin of XBlocks
+
+* topic
+
+* topic
+
+---
+
+# What is an edX course?
+
+* An edX course is a tree composed of XBlocks.
+
+.float-left.scale50[![Course tree diagram](assets/edx_course.png "edX Course")]
+
+---
+
+# XBlocks Origin
+
+--
+
+* Course authors wanted to add their own interactive course modules.
+
+--
+
+* Too difficult to add code to edx-platform in order to add these custom modules.
+
+--
+
+* Needed a way to enable:
+
+--
+
+ * course authors to develop modules independently of edx-platform
+
+--
+
+ * edx.org (and other OpenEdx installations) to plugin these externally developed modules
+
+--
+
+* The XBlock architecture was developed to meet these needs.
+
+---
+
+# <b>Exactly</b> what is an XBlock?
+
+--
+<br>
+<br>
+<center>A Python module in a separate repository</center>
+
+---
+
+# What's in an XBlock Python module?
+
+--
+
+* A Python class derived from the core XBlock class, containing:
+
+--
+
+  * <b>Fields</b>
+
+--
+
+  * <b>Views</b>
+
+--
+
+  * <b>Handlers</b>
+
+---
+
+# Fields
+
+--
+
+* Store block state data.
+
+--
+
+* Several basic field types, such as:
+
+--
+
+ * Integer
+ * String
+ * DateTime
+ * List
+ * Set
+ * etc....
+
+---
+
+# Field Examples:
+
+```python
+    ssh_pwd = String(
+        default='~',
+        scope=Scope.user_state,
+        help="When using cd command, previous path is stored here."
+    )
+
+    visible_to_staff_only = Boolean(
+        default=False,
+        scope=Scope.settings,
+        help="If true, seen only by course staff, regardless of start date."
+    )
+```
+---
+
+# Views
+
+--
+<br>
+<br>
+* student_view() - for the LMS
+
+* author_view() & studio_view() - for Studio
+
+---
+
+# View Example - student_view()
+
+```python
+def student_view(self, context=None):
+    """
+    The primary view of the AudioXBlock, shown to students
+    when viewing courses.
+    """
+    html = self.load_resource("static/html/audio.html")
+    frag = Fragment(html.format(src = self.src))
+    frag.add_css(self.load_resource("static/css/audio.css"))
+    return frag
+```
+---
+
+# View Example - studio_view()
+
+```python
+def studio_view(self, context):
+    """
+    The view for editing the AudioXBlock parameters inside Studio.
+    """
+    html = self.load_resource("static/html/audio_edit.html")
+    frag = Fragment(html.format(src = self.src))
+    js = self.load_resource("static/js/src/audio_edit.js")
+    frag.add_javascript(js)
+    frag.initialize_js('AudioEditBlock')
+    return frag
+```
+---
+
+# Handlers
+
+--
+
+* Python methods to handle user input
+
+--
+
+* Invoked while user is interacting with the XBlock
+
+--
+
+* Client-side Javascript calls the methods
+
+--
+
+* Some examples:
+
+--
+
+ * Change the subtitles on this video to Spanish
+
+--
+
+ * Submit preliminary answer.
+
+---
+
+# Handler Example
+
+--
+
+```python
+@XBlock.json_handler
+def getPort(self, data, suffix=''):
+    selected_host = data["selectedHost"]
+    x = 0
+    for i in self.ssh_hostnames:
+        if (i==selected_host):
+            return {"port": self.ssh_portList[x]}
+        x += 1
+    return {"port": ""}
+```
+
+---
+
+# XBlock Environments
+
+--
+
+* As previously stated, XBlocks operate within LMS and Studio.
+
+--
+
+* Other environments, such as XBlock workbench, are possible.
+
+--
+
+* An XBlock might need interaction with its running environment, such as:
+
+--
+
+ * Information about the current user
+
+--
+ * Upload this file
+
+---
+
+# How does an XBlock interact with its environment?
+
+--
+
+* The XBlock runtime
+
+.float-left.scale50[![XBlock Runtime diagram](assets/runtime.png "XBlock Runtime")]
+
+---
+
+# XBlock Runtime
+
+--
+
+* Provides:
+
+--
+
+ * User registration
+
+--
+
+ * Progress tracking
+
+--
+
+ * Grading
+
+---
+
+# XBlock Runtime
+
+
+* Data storage
+
+--
+
+ * Course content stored in MongoDB
+
+--
+
+ * Student response data in MySQL
+
+--
+
+<b>BUT:</b>
+
+--
+
+Your XBlock code doesn't care!
+
+--
+
+* Specify the correct Field scopes.
+
+ * Storage is abstracted away by XBlock runtime.
+
+---
+
+# XBlock vs. LTI
+
+* LTI - Learning Tools Interoperability
+
+* A way to integrate external learning experiences into edX courses.
+
+* External grades are securely transferred back to the edX course.
+
+* Which should I use? / What's the difference?
+
+---
+
+# XBlock vs. LTI
+
+* XBlock:
+
+ * runs along with/inside of LMS.
+ * installed into LMS code and is tightly coupled.
+
+* LTI:
+
+ * integrates a separate app with LMS.
+ * loosely coupled with LMS.
+
+---
+
+# XBlock vs. LTI
+
+* XBlock:
+ * written in Python/JS/HTML only.
+ * currently only an Open Edx "standard".
+
+* LTI
+ * module can be in any language.
+ * widely adopted standard and can be used in other contexts.
+
+---
+
+# What's Right For My Course Situation?
+
+You: <b>SO</b> - I need an XBlock that does:
+
+* <insert interesting educational experience here...>.
+
+What should <b>I</b> do?
+
+* JFTR, LTI exists and is usable.
+* First, check the list of existing XBlocks here:
+* If no existing XBlock:
+ * learn the architecture and possibilities of XBlocks
+ * determine if it makes sense for your situation.
+
+---
+
+# XBlock Development
+
+You: XBlock is definitely the way to go! How do I get started?
+
+* Go through the tutorial.
+
+* Examine existing XBlocks.
+
+* Ask questions on the edx-code mailing list and/or Slack channel.
+
+---
+
+# Thanks for your time!
+
+* This talk's slides can be accessed here:
+
+<https://doctoryes.github.io/openedx_talk_xblocks>
+
+</textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create({
+        ratio: '16:9',
+        // Navigation options
+        navigation: {
+          // Enable or disable navigating using scroll
+          // Default: true
+          // Alternatives: false
+          scroll: false,
+
+          // Enable or disable navigation using touch
+          // Default: true
+          // Alternatives: false
+          touch: true,
+
+          // Enable or disable navigation using click
+          // Default: false
+          // Alternatives: true
+          click: true
+        },
+    });
+    </script>
+  </body>
+</html>
