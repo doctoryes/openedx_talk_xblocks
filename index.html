@@ -60,11 +60,11 @@ Core Platform Team
 
 # Talk Summary
 
-* Origin of XBlocks
+* What is an XBlock?
 
-* topic
+* XBlock Composition
 
-* topic
+* Should you create an XBlock?
 
 ---
 
@@ -109,7 +109,10 @@ Core Platform Team
 --
 <br>
 <br>
-<center>A Python module in a separate repository</center>
+<center>An stand-alone, installable Python module</center>
+--
+<br>
+<center>that does <b>not</b> have to be open-sourced.</center>
 
 ---
 
@@ -133,7 +136,7 @@ Core Platform Team
 
 ---
 
-# Fields
+# XBlock Fields
 
 --
 
@@ -154,7 +157,7 @@ Core Platform Team
 
 ---
 
-# Field Examples:
+# XBlock Field Examples:
 
 ```python
     ssh_pwd = String(
@@ -171,18 +174,22 @@ Core Platform Team
 ```
 ---
 
-# Views
+# XBlock Views
 
 --
-<br>
-<br>
-* student_view() - for the LMS
 
-* author_view() & studio_view() - for Studio
+<br>
+* For the LMS:
+
+ * `student_view()`
+
+* For Studio:
+
+ * `author_view()` & `studio_view()`
 
 ---
 
-# View Example - student_view()
+# XBlock View Example - student_view()
 
 ```python
 def student_view(self, context=None):
@@ -197,7 +204,7 @@ def student_view(self, context=None):
 ```
 ---
 
-# View Example - studio_view()
+# XBlock View Example - studio_view()
 
 ```python
 def studio_view(self, context):
@@ -213,7 +220,7 @@ def studio_view(self, context):
 ```
 ---
 
-# Handlers
+# XBlock Handlers
 
 --
 
@@ -225,7 +232,7 @@ def studio_view(self, context):
 
 --
 
-* Client-side Javascript calls the methods
+* Called by client-side Javascript embedded in the rendered XBlock
 
 --
 
@@ -237,11 +244,11 @@ def studio_view(self, context):
 
 --
 
- * Submit preliminary answer.
+ * Submit a preliminary answer.
 
 ---
 
-# Handler Example
+# XBlock Handler Example
 
 --
 
@@ -271,18 +278,23 @@ def getPort(self, data, suffix=''):
 
 --
 
-* An XBlock might need interaction with its running environment, such as:
+* An XBlock may need interaction with its running environment, such as:
 
 --
 
  * Information about the current user
 
 --
- * Upload this file
+
+ * Has this user completed problem X?
 
 ---
 
-# How does an XBlock interact with its environment?
+# XBlock Environment Interaction
+
+--
+
+* How does an XBlock interact with its environment?
 
 --
 
@@ -356,12 +368,10 @@ Your XBlock code doesn't care!
 # XBlock vs. LTI
 
 * XBlock:
-
  * runs along with/inside of LMS.
  * installed into LMS code and is tightly coupled.
 
 * LTI:
-
  * integrates a separate app with LMS.
  * loosely coupled with LMS.
 
@@ -371,7 +381,7 @@ Your XBlock code doesn't care!
 
 * XBlock:
  * written in Python/JS/HTML only.
- * currently only an Open Edx "standard".
+ * currently only an Open Edx "standard" - not formally adopted.
 
 * LTI
  * module can be in any language.
@@ -381,29 +391,64 @@ Your XBlock code doesn't care!
 
 # What's Right For My Course Situation?
 
-You: <b>SO</b> - I need an XBlock that does:
+--
 
-* <insert interesting educational experience here...>.
+<b>SO</b> - you need an XBlock that does:
 
-What should <b>I</b> do?
+--
 
-* JFTR, LTI exists and is usable.
-* First, check the list of existing XBlocks here:
+<i>insert interesting educational experience here...</i>
+
+--
+
+What should <b>you</b> do?
+--
+
+* Note: LTI exists and is usable.
+* First, check the [list of existing XBlocks](https://openedx.atlassian.net/wiki/display/COMM/XBlocks+Directory).
 * If no existing XBlock:
  * learn the architecture and possibilities of XBlocks
  * determine if it makes sense for your situation.
+ * See also: [Five ways to extend edX](https://github.com/edx/edx-platform/wiki/Five-ways-to-extend-edX)
 
 ---
 
 # XBlock Development
 
-You: XBlock is definitely the way to go! How do I get started?
+--
 
+<b>SO</b> - you've determined an XBlock is definitely the way to go!
+
+--
+
+How do you get started?
+
+--
 * Go through the tutorial.
 
 * Examine existing XBlocks.
 
 * Ask questions on the edx-code mailing list and/or Slack channel.
+
+ * [edx-code Google Group](https://groups.google.com/forum/#!forum/edx-code)
+
+ * [#general on OpenEdx Slack](https://openedx.slack.com)
+
+---
+
+# XBlock Resources
+
+* Learning about XBlocks
+
+ * [XBlock API doc](http://xblock.readthedocs.org/ "XBlock API Doc")
+
+ * [XBlock Tutorial](http://edx.readthedocs.org/projects/xblock-tutorial)
+
+* What XBlocks currently exist?
+
+ * [XBlocks Directory](https://openedx.atlassian.net/wiki/display/COMM/XBlocks+Directory)
+
+ * [xblocks.org](http://xblocks.org/)
 
 ---
 
