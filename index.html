@@ -83,11 +83,19 @@ Core Platform Team
 
 --
 
-* Course authors wanted to add their own interactive course modules.
+* Course Authors:
 
 --
 
-* Adding code for custom edx-platform modules???
+ * experimenting with teaching methods
+
+--
+
+ * needed to add their own rich interactives
+
+--
+
+* Adding code for these interactions to edx-platform???
 
 --
 <br>
@@ -101,7 +109,7 @@ Core Platform Team
 
 --
 
-Different users, different needs:
+<center><b>Different Users, Different Needs</b></center>
 
 --
 
@@ -113,7 +121,7 @@ Different users, different needs:
 
 --
 
-* OpenEdx installations (like edx.org)
+* Open edX installations (like edx.org)
 
 --
 
@@ -142,7 +150,7 @@ Different users, different needs:
 
 --
 
-* A Python class derived from the core XBlock class, containing:
+* A Python class derived from the core XBlock class
 
 --
 
@@ -162,11 +170,11 @@ Different users, different needs:
 
 --
 
-* Store block state data.
+* Store block state
 
 --
 
-* Several basic field types, such as:
+* Basic field types:
 
 --
 
@@ -250,15 +258,15 @@ def studio_view(self, context):
 
 --
 
-* Invoked during user / XBlock interaction
+* Implements interaction
 
 --
 
-* Called by client-side Javascript in the rendered XBlock
+* Called by client-side Javascript in the XBlock
 
 --
 
-* Some examples:
+* Examples:
 
 --
 
@@ -276,11 +284,11 @@ def studio_view(self, context):
 
 ```python
 @XBlock.json_handler
-def getPort(self, data, suffix=''):
+def getPort(self, data):
     selected_host = data["selectedHost"]
     x = 0
-    for i in self.ssh_hostnames:
-        if (i==selected_host):
+    for host in self.ssh_hostnames:
+        if host == selected_host:
             return {"port": self.ssh_portList[x]}
         x += 1
     return {"port": ""}
@@ -296,7 +304,7 @@ def getPort(self, data, suffix=''):
 
 --
 
-* Also: XBlock Workbench - and other possible environments.
+* Also: XBlock Workbench - and others.
 
 --
 
@@ -308,7 +316,11 @@ def getPort(self, data, suffix=''):
 
 --
 
- * Has this user completed problem X?
+ * Translate this text.
+
+--
+
+ * Publish a grade.
 
 ---
 
@@ -372,8 +384,6 @@ Your XBlock code doesn't care!
 --
 
 * Specify the correct Field scopes.
-
- * Storage is abstracted away by XBlock runtime.
 
 ---
 
@@ -442,23 +452,19 @@ What should <b>you</b> do?
 
 * Consider LTI.
 
+ * See also: [Five ways to extend edX](https://github.com/edx/edx-platform/wiki/Five-ways-to-extend-edX)
+
 --
 
 * Check the [list of existing XBlocks](https://openedx.atlassian.net/wiki/display/COMM/XBlocks+Directory).
 
 --
 
-* If no existing XBlock:
+* If no XBlock exists:
 
 --
 
  * learn the architecture and possibilities of XBlocks
---
-
- * determine if it makes sense for your situation.
---
-
- * See also: [Five ways to extend edX](https://github.com/edx/edx-platform/wiki/Five-ways-to-extend-edX)
 
 ---
 
@@ -466,18 +472,18 @@ What should <b>you</b> do?
 
 --
 
-<b>SO</b> - you've determined an XBlock is definitely the way to go!
+<b>So</b> - you've decided to develop an XBlock.
 
 --
 
 How do you get started?
 
 --
-* XBlock tutorial.
+* Perform the [XBlock tutorial](http://edx.readthedocs.org/projects/xblock-tutorial)
 
 --
 
-* Examine existing XBlocks.
+* Examine [existing XBlocks](https://openedx.atlassian.net/wiki/display/COMM/XBlocks+Directory)
 
 --
 * Ask questions on the edx-code mailing list and/or Slack channel.
@@ -490,19 +496,24 @@ How do you get started?
 
 # XBlock Resources
 
+* What XBlocks currently exist?
+
+ * [XBlocks Directory](https://openedx.atlassian.net/wiki/display/COMM/XBlocks+Directory)
+ * [xblocks.org](http://xblocks.org/)
+
+--
+
 * Learning about XBlocks
 
  * [XBlock API doc](http://xblock.readthedocs.org/ "XBlock API Doc")
-
  * [XBlock Tutorial](http://edx.readthedocs.org/projects/xblock-tutorial)
 
 --
 
-* What XBlocks currently exist?
+* XBlock source code
 
- * [XBlocks Directory](https://openedx.atlassian.net/wiki/display/COMM/XBlocks+Directory)
-
- * [xblocks.org](http://xblocks.org/)
+ * [XBlock repo](https://github.com/edx/xblock)
+ * [XBlock SDK repo](https://github.com/edx/xblock-sdk)
 
 ---
 
