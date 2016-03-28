@@ -18,6 +18,9 @@
     .scale200 {
       width: 200%;
     }
+    .bigtext {
+      font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif; font-size: 3em;
+    }
     .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; font-size: 1em; padding: 0.0em;}
     .remark-code-line-highlighted     { background-color: #373832; }
     th {
@@ -84,23 +87,42 @@ Core Platform Team
 
 --
 
-* Too difficult to add code to edx-platform in order to add these custom modules.
+* Adding code for custom edx-platform modules???
+
+--
+<br>
+<br>
+<br>
+<center><b>.bigtext[DIFFICULT]</b></center>
+
+---
+
+# XBlocks Origin
 
 --
 
-* Needed a way to enable:
+Different users, different needs:
 
 --
 
- * course authors to develop modules independently of edx-platform
+* Course Authors
 
 --
 
- * edx.org (and other OpenEdx installations) to plugin these externally developed modules
+ * Need: develop modules independently of edx-platform
 
 --
 
-* The XBlock architecture was developed to meet these needs.
+* OpenEdx installations (like edx.org)
+
+--
+
+ * Need: easily plugin and use these modules
+
+--
+<br>
+<br>
+<center><b>The XBlock architecture meets both these needs!</b></center>
 
 ---
 
@@ -109,7 +131,7 @@ Core Platform Team
 --
 <br>
 <br>
-<center>An stand-alone, installable Python module</center>
+<center>A stand-alone, installable Python module</center>
 --
 <br>
 <center>that does <b>not</b> have to be open-sourced.</center>
@@ -228,11 +250,11 @@ def studio_view(self, context):
 
 --
 
-* Invoked while user is interacting with the XBlock
+* Invoked during user / XBlock interaction
 
 --
 
-* Called by client-side Javascript embedded in the rendered XBlock
+* Called by client-side Javascript in the rendered XBlock
 
 --
 
@@ -270,11 +292,11 @@ def getPort(self, data, suffix=''):
 
 --
 
-* As previously stated, XBlocks operate within LMS and Studio.
+* XBlocks operate within LMS and Studio.
 
 --
 
-* Other environments, such as XBlock workbench, are possible.
+* Also: XBlock Workbench - and other possible environments.
 
 --
 
@@ -290,17 +312,19 @@ def getPort(self, data, suffix=''):
 
 ---
 
-# XBlock Environment Interaction
+# XBlock Environments
 
 --
 
 * How does an XBlock interact with its environment?
 
---
+---
 
-* The XBlock runtime
+# XBlock Environments
 
-.float-left.scale50[![XBlock Runtime diagram](assets/runtime.png "XBlock Runtime")]
+Via the XBlock Runtime:
+
+.float-center.scale50[![XBlock Runtime diagram](assets/runtime.png "XBlock Runtime")]
 
 ---
 
@@ -355,13 +379,20 @@ Your XBlock code doesn't care!
 
 # XBlock vs. LTI
 
-* LTI - Learning Tools Interoperability
+* (LTI: Learning Tools Interoperability)
+
+--
 
 * A way to integrate external learning experiences into edX courses.
 
+--
+
 * External grades are securely transferred back to the edX course.
 
-* Which should I use? / What's the difference?
+--
+<br>
+<br>
+<center><b>Which should I use? / What's the difference?</b></center>
 
 ---
 
@@ -389,26 +420,44 @@ Your XBlock code doesn't care!
 
 ---
 
-# What's Right For My Course Situation?
+# What's Right For My Situation?
 
 --
 
-<b>SO</b> - you need an XBlock that does:
+<b>Suppose</b> you need an XBlock that does:
 
 --
 
-<i>insert interesting educational experience here...</i>
+<center><i>insert interesting educational experience here...</i></center>
 
 --
 
 What should <b>you</b> do?
+
+---
+
+# What's Right For My Situation?
+
 --
 
-* Note: LTI exists and is usable.
-* First, check the [list of existing XBlocks](https://openedx.atlassian.net/wiki/display/COMM/XBlocks+Directory).
+* Consider LTI.
+
+--
+
+* Check the [list of existing XBlocks](https://openedx.atlassian.net/wiki/display/COMM/XBlocks+Directory).
+
+--
+
 * If no existing XBlock:
+
+--
+
  * learn the architecture and possibilities of XBlocks
+--
+
  * determine if it makes sense for your situation.
+--
+
  * See also: [Five ways to extend edX](https://github.com/edx/edx-platform/wiki/Five-ways-to-extend-edX)
 
 ---
@@ -424,10 +473,13 @@ What should <b>you</b> do?
 How do you get started?
 
 --
-* Go through the tutorial.
+* XBlock tutorial.
+
+--
 
 * Examine existing XBlocks.
 
+--
 * Ask questions on the edx-code mailing list and/or Slack channel.
 
  * [edx-code Google Group](https://groups.google.com/forum/#!forum/edx-code)
@@ -443,6 +495,8 @@ How do you get started?
  * [XBlock API doc](http://xblock.readthedocs.org/ "XBlock API Doc")
 
  * [XBlock Tutorial](http://edx.readthedocs.org/projects/xblock-tutorial)
+
+--
 
 * What XBlocks currently exist?
 
